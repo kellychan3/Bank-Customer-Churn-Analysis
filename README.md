@@ -63,6 +63,7 @@ Accuracy: 84% on test set
 Confusion Matrix:
 <img width="548" height="492" alt="image" src="https://github.com/user-attachments/assets/c94ec70f-1a1a-487f-a328-652e6770a939" />
 
+
 - True Negative: 2520
 - True Positive: 255
 - False Negative: 428
@@ -70,6 +71,7 @@ Confusion Matrix:
 
 Classification Report:
 <img width="630" height="211" alt="image" src="https://github.com/user-attachments/assets/e867901f-6287-44ee-82c5-34039386ba9d" />
+
 
 - Precision, Recall, F1-score per class
 - Class 0 (stayed): high recall (0.96)
