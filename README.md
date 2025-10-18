@@ -49,16 +49,32 @@ The dataset Churn_Modelling.csv contains 10,000 customer records with 13 feature
 
 
 ## Model Building
-**Architecture**:
+**Base Model**: The base model was designed as a simple feedforward neural network to establish a performance baseline.
 - Input layer: 12 features
-- Hidden layers: 3 layers (64, 48, 8 neurons) with ReLU activation
-- Output layer: 1 neuron with Sigmoid activation for binary classification
-- Optimizer: Adam (learning rate = 0.0007, tuned via Keras Tuner)
-- Loss function: Binary cross-entropy
-- Training: 100 epochs, batch size = 32
-- Early stopping: Applied to prevent overfitting
+- Architecture:
+  - Dense(32, ReLU) → BatchNormalization → Dropout(0.3)
+  - Dense(16, ReLU) → BatchNormalization → Dropout(0.3)
+  - Dense(8, ReLU) → BatchNormalization
+  - Output: Dense(1, Sigmoid)
+- Optimizer: Adam (lr=0.001)
+- Loss Function: Binary Crossentropyy
+- EarlyStopping: Patience = 10
+- Test Accuracy: 0.8600
 
+**Optimized Model**: To improve performance, hyperparameter tuning was conducted using KerasTuner (Random Search).
+- Tuned Parameters:
+  - units_input: 16–64
+  - units_hidden: 8–48
+  - learning_rate: 1e-4 – 1e-2 (log scale)
+- Best Configuration:
+  - Dense(64, ReLU) → BatchNormalization → Dropout(0.3)
+  - Dense(48, ReLU) → BatchNormalization → Dropout(0.3)
+  - Output: Dense(1, Sigmoid)
+  - Learning Rate: 0.000707
+- Final Test Accuracy: 0.8570
 
+-> The optimized model achieved similar accuracy to the baseline while using a more refined architecture and lower learning rate, indicating stable and efficient training.
+  
 ## Model Evaluation
 **Test Accuracy**: 86%
 
