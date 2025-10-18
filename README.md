@@ -13,14 +13,14 @@
 
 ## Project Overview
 
-Predicting customer churn is crucial for banks to retain clients and optimize marketing strategies. This project builds an Artificial Neural Network (ANN) model to identify customers likely to leave the bank using demographics, account activity, and financial information.
+Predicting customer churn is crucial for banks to retain clients and optimize marketing strategies. This project builds an **Artificial Neural Network (ANN)** model to identify customers likely to leave the bank using demographics, account activity, and financial information.
 
 ## Dataset
 
 The dataset Churn_Modelling.csv contains 10,000 customer records with 13 features, including demographic data, account activity, and financial status. The target variable Exited indicates whether a customer has left the bank (1) or remains (0).
 <img width="1413" height="460" alt="image" src="https://github.com/user-attachments/assets/5c6936b2-96b1-416d-8ec6-dec22219eb66" />
 
-Feature Description:
+**Feature Description**:
 - CustomerId: Unique identifier for each customer.
 - Surname: Customer’s last name.
 - CreditScore: Customer’s credit score (higher values indicate better creditworthiness).
@@ -36,51 +36,46 @@ Feature Description:
 - Exited: Target variable: 1 = Customer has left the bank, 0 = Customer remains.
 
 ## Exploratory Data Analysis
-Target distribution: 20% churned, 80% stayed → imbalanced dataset.
+**Target distribution**: 20% churned, 80% stayed → imbalanced dataset.
 <img width="554" height="432" alt="image" src="https://github.com/user-attachments/assets/78953661-3110-41fd-ba14-fa0634c9383b" />
 
-Correlations:
+**Correlations**:
 <img width="1232" height="1304" alt="image" src="https://github.com/user-attachments/assets/1c87117e-86d5-4323-9d40-2c9e58b4b647" />
 <img width="2989" height="2990" alt="image" src="https://github.com/user-attachments/assets/8bbc76f7-87a3-4ec5-a5c1-c858a6a07047" />
 
 - Age positively correlates with churn (0.29).
 - Active members less likely to churn (-0.16).
 - Geography influences churn (Germany higher).
-- Identified strong predictors: Age, Balance, Geography.
+
 
 ## Model Building
-Architecture:
+**Architecture**:
 - Input layer: 12 features
-- Hidden layers: 2 layers × 6 neurons, ReLU activation
-- Output layer: 1 neuron, Sigmoid activation
-- Optimizer: Adam
+- Hidden layers: 3 layers (64, 48, 8 neurons) with ReLU activation
+- Output layer: 1 neuron with Sigmoid activation for binary classification
+- Optimizer: Adam (learning rate = 0.0007, tuned via Keras Tuner)
 - Loss function: Binary cross-entropy
-- Training: 100 epochs, batch size = 10
+- Training: 100 epochs, batch size = 32
+- Early stopping: Applied to prevent overfitting
+
 
 ## Model Evaluation
-Accuracy: 84% on test set
+**Test Accuracy**: 86%
 
-Confusion Matrix:
-- True Negative: 2520
-- True Positive: 255
-- False Negative: 428
-- False Positive: 97
-<img width="548" height="492" alt="image" src="https://github.com/user-attachments/assets/c94ec70f-1a1a-487f-a328-652e6770a939" />
+**Confusion Matrix**:
+- True Negative (TN): 2456 — correctly predicted as staying
+- True Positive (TP): 372 — correctly predicted as churn
+- False Negative (FN): 311 — missed churn cases
+- False Positive (FP): 161 — false churn predictions
+<img width="643" height="491" alt="image" src="https://github.com/user-attachments/assets/c4225251-eca2-4ee9-b490-866cd215cc34" />
 
+**Classification Report**:
+- The model shows strong performance for non-churn customers (high recall and precision).
+- Churn detection improved compared to the initial model but still shows moderate recall, indicating some missed churn cases.
+- Class imbalance remains a factor — churners are underrepresented in the dataset.
+<img width="656" height="202" alt="image" src="https://github.com/user-attachments/assets/e2888b55-7cea-4b10-b9ad-f807ebc4b9c6" />
 
-Classification Report:
-- Precision, Recall, F1-score per class
-- Class 0 (stayed): high recall (0.96)
-- Class 1 (churn): low recall (0.37)
-<img width="630" height="211" alt="image" src="https://github.com/user-attachments/assets/e867901f-6287-44ee-82c5-34039386ba9d" />
-
-Insights: Model identifies non-churn customers well but struggles with churn prediction due to class imbalance.
 
 ## Conclusion
-ANN performs reasonably well with overall accuracy of 84%.
-Dataset imbalance affects the model’s ability to detect churners.
-
-Future improvements:
-- Apply oversampling (SMOTE) or class weighting.
-- Test other models (Random Forest, XGBoost).
-- Hyperparameter tuning and feature engineering.
+The optimized ANN achieved 86% test accuracy, showing solid predictive performance overall.
+While it effectively identifies customers likely to stay, recall for churners (54%) suggests further improvement could be made through techniques like class rebalancing (SMOTE, weighting) or ensemble methods.
